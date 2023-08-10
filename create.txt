@@ -1,0 +1,8 @@
+create table tarefas(
+	cod_tarefa SERIAL PRIMARY KEY,
+	nome_tarefa varchar(40) not null,
+	descricao_tarefa varchar(200) not null,
+	status_tarefa varchar(8) not null,
+	data_tarefa date not null
+	
+)
