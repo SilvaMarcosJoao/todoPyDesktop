@@ -22,7 +22,7 @@ class Banco:
         else:
             return self.conexao
 
-    def desconectar(self):
+    def desconectar(self) -> None:
         """
         """
         try:
