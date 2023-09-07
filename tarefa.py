@@ -3,6 +3,7 @@ import bancoDados
 
 class Tarefa:
     banco = bancoDados.Banco()
+    banco.tabelaTarefa()
     def __init__(self) -> None:
         self.nomeTarefa = None
         self.descTarefa = None
@@ -55,6 +56,7 @@ class Tarefa:
         self.banco.cursor.execute("""SELECT cod_tarefa, nome_tarefa, descricao_tarefa, to_char(data_tarefa, 'DD/MM/YYYY'), status_tarefa FROM tarefas 
                                   ORDER BY cod_tarefa""")
         self.listaTaf =  self.banco.cursor.fetchall()
+        self.banco.desconectar()
         return self.listaTaf
     
 
@@ -69,6 +71,7 @@ class Tarefa:
                                   WHERE status_tarefa = '{status}'
                                   ORDER BY cod_tarefa """)
         self.listaTafStatus = self.banco.cursor.fetchall()
+        self.banco.desconectar()
         return self.listaTafStatus
     
 
@@ -83,6 +86,7 @@ class Tarefa:
                                   WHERE nome_tarefa like '{nomeTarefa[0]}%' 
                                   ORDER BY cod_tarefa""")
         self.tarefa = self.banco.cursor.fetchall()
+        self.banco.desconectar()
         return self.tarefa
     
 
@@ -97,6 +101,7 @@ class Tarefa:
                                 SET status_tarefa = 'Concluída'
                                 WHERE cod_tarefa = '{cod_tarefa}' """)
         self.banco.conexao.commit()
+        self.banco.desconectar()
     
 
     def excluirTarefa(self, cod_tarefa:int) -> None:
@@ -107,4 +112,5 @@ class Tarefa:
         """
         self.banco.conectar()
         self.banco.cursor.execute(f""" DELETE FROM tarefas WHERE cod_tarefa = {cod_tarefa}""")
-        
+        self.banco.conexao.commit()
+        self.banco.desconectar()
