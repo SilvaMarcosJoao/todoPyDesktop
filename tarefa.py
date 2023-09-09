@@ -3,7 +3,7 @@ import bancoDados
 
 class Tarefa:
     banco = bancoDados.Banco()
-    
+    banco.tabelaTarefa()
     def __init__(self) -> None:
         self.nomeTarefa = None
         self.descTarefa = None

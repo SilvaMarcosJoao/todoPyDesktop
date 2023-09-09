@@ -100,7 +100,8 @@ class appTodo(eventos.Eventos):
                 text='', 
                 image=self.imgBtnCal, 
                 fg_color='#34344e', 
-                width=40, height=30)
+                width=40, height=30,
+                command=self.aparenciaCalendario)
         self.btnAddCalen.place(relx=0.153, rely=0.7)
 
         self.btnAddTarefa = CTkButton(self.apptodo, 
@@ -220,7 +221,7 @@ class appTodo(eventos.Eventos):
                 fg_color='#34344e', 
                 font=('Ebrima', 12), 
                 locale='pt_br')
-        self.calendarioTarefa.config(relx=0.28, rely=0.2, width=250, height=200)
+        self.calendarioTarefa.place(relx=0.28, rely=0.2, width=250, height=200)
 
         self.confirmData = CTkButton(self.apptodo, 
                 text='Confirmar',
