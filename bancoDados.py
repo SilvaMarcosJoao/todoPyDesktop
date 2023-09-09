@@ -5,6 +5,17 @@ class Banco:
     def __init__(self) -> None:
         self.conexao = None
         
+    def tabelaTarefa(self) -> None:
+        self.conectar()
+        self.cursor.execute(""" CREATE TABLE IF NOT EXISTS tarefas(
+	        cod_tarefa SERIAL PRIMARY KEY,
+	        nome_tarefa varchar(40) not null,
+	        descricao_tarefa varchar(200) not null,
+	        status_tarefa varchar(8) not null,
+	        data_tarefa date not null )""")
+        self.conexao.commit()
+        self.desconectar()
+
     def conectar(self):
         """
         """
@@ -17,12 +28,13 @@ class Banco:
                 port='5432'
             )
             self.cursor = self.conexao.cursor()
+            self.tabelaTarefa()
         except (ConnectionError):
             print('Erro na conexão')
         else:
             return self.conexao
 
-    def desconectar(self):
+    def desconectar(self) -> None:
         """
         """
         try:
@@ -31,3 +43,5 @@ class Banco:
             print('Erro ao tentar desconectar-se')
         else:
             print('Desconectado')
+
+    

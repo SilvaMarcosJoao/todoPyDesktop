@@ -1,6 +1,6 @@
 from modulos import *
 import eventos
-
+from tkcalendar import Calendar
 class appTodo(eventos.Eventos):
     def __init__(self) -> None:
         self.apptodo = CTk()
@@ -100,8 +100,7 @@ class appTodo(eventos.Eventos):
                 text='', 
                 image=self.imgBtnCal, 
                 fg_color='#34344e', 
-                width=40, height=30, 
-                command=self.aparenciaCalendario)
+                width=40, height=30)
         self.btnAddCalen.place(relx=0.153, rely=0.7)
 
         self.btnAddTarefa = CTkButton(self.apptodo, 
@@ -118,7 +117,8 @@ class appTodo(eventos.Eventos):
                 font=('Ebrima', 16, 'bold'), 
                 fg_color='#34344e', 
                 hover_color='#386dbd', 
-                width=180, height=30)
+                width=180, height=30,
+                command=self.encerrarTarefa)
         self.btnFinTarefa.place(relx=0.02, rely=0.84)
 
         self.btnExclTarefa = CTkButton(self.apptodo, 
@@ -126,7 +126,8 @@ class appTodo(eventos.Eventos):
                 font=('Ebrima', 16, 'bold'), 
                 fg_color='#34344e', 
                 hover_color='#386dbd', 
-                width=180, height=30)
+                width=180, height=30,
+                command=self.deletarTarefa)
         self.btnExclTarefa.place(relx=0.02, rely=0.91)
 
         self.lblbuscaTarefa = CTkLabel(self.apptodo, 
@@ -148,7 +149,8 @@ class appTodo(eventos.Eventos):
                 image=self.imgBtnBusc, 
                 fg_color='#34344e', 
                 hover_color='#386dbd', 
-                width=50, height=30)
+                width=50, height=30,
+                command=self.exibirTarefa)
         self.btnbuscTarefa.place(relx=0.9, rely=0.13)
 
         self.lblbuscaStatus = CTkLabel(self.apptodo, 
@@ -186,19 +188,21 @@ class appTodo(eventos.Eventos):
 
         self.listaTarefa = ttk.Treeview(self.apptodo, 
                 height=4, 
-                columns=('Col1', 'Col2', 'Col3', 'Col4'), 
+                columns=('Col1', 'Col2', 'Col3', 'Col4', 'Col5'), 
                 show='headings')
 
         self.listaTarefa.heading('#0', text='')
-        self.listaTarefa.heading('#1', text='Tarefa')
-        self.listaTarefa.heading('#2', text='Descrição')
-        self.listaTarefa.heading('#3', text='Data Criação')
-        self.listaTarefa.heading('#4', text='Status')
+        self.listaTarefa.heading('#1', text='Cod')
+        self.listaTarefa.heading('#2', text='Tarefa')
+        self.listaTarefa.heading('#3', text='Descrição')
+        self.listaTarefa.heading('#4', text='Data Criação')
+        self.listaTarefa.heading('#5', text='Status')
 
-        self.listaTarefa.column('#1', width=100, anchor='center')
-        self.listaTarefa.column('#2', width=240, anchor='center')
-        self.listaTarefa.column('#3', width=80, anchor='center')
-        self.listaTarefa.column('#4', width=100, anchor='center')
+        self.listaTarefa.column('#1', width=30, anchor='center')
+        self.listaTarefa.column('#2', width=80, anchor='center')
+        self.listaTarefa.column('#3', width=240, anchor='center')
+        self.listaTarefa.column('#4', width=75, anchor='center')
+        self.listaTarefa.column('#5', width=100, anchor='center')
 
         self.listaTarefa.place(relx=0.28, rely=0.41, relwidth=0.68, relheight=0.56)
 
@@ -208,14 +212,15 @@ class appTodo(eventos.Eventos):
                 orientation='vertical', 
                 command=self.listaTarefa.yview)
         self.scrollTarefa.place(relx=0.96, rely=0.41, relheight=0.56)
-
+        self.listaTarefa.configure(yscrollcommand=self.scrollTarefa.set)
+        self.listaTarefa.bind("<Double-1>", self.duplo_clique_tarefa)     
 
     def aparenciaCalendario(self):
         self.calendarioTarefa = Calendar(self.apptodo, 
                 fg_color='#34344e', 
                 font=('Ebrima', 12), 
                 locale='pt_br')
-        self.calendarioTarefa.place(relx=0.28, rely=0.2, width=250, height=200)
+        self.calendarioTarefa.config(relx=0.28, rely=0.2, width=250, height=200)
 
         self.confirmData = CTkButton(self.apptodo, 
                 text='Confirmar',
