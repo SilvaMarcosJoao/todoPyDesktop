@@ -28,6 +28,7 @@ class Banco:
                 port='5432'
             )
             self.cursor = self.conexao.cursor()
+            self.tabelaTarefa()
         except (ConnectionError):
             print('Erro na conexão')
         else:

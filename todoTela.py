@@ -1,6 +1,6 @@
 from modulos import *
 import eventos
-
+from tkcalendar import Calendar
 class appTodo(eventos.Eventos):
     def __init__(self) -> None:
         self.apptodo = CTk()
@@ -95,13 +95,12 @@ class appTodo(eventos.Eventos):
                 placeholder_text='dd/mm/yyyy')
         self.et_dataTarefa.place(relx=0.02, rely=0.7)
 
-        self.imgBtnCal = CTkImage(dark_image=Image.open('..\imagens\\calendar.png'), size=(20,22))
+        self.imgBtnCal = CTkImage(dark_image=Image.open('.\imagens\\calendar.png'), size=(20,22))
         self.btnAddCalen = CTkButton(self.apptodo, 
                 text='', 
                 image=self.imgBtnCal, 
                 fg_color='#34344e', 
-                width=40, height=30, 
-                command=self.aparenciaCalendario)
+                width=40, height=30)
         self.btnAddCalen.place(relx=0.153, rely=0.7)
 
         self.btnAddTarefa = CTkButton(self.apptodo, 
@@ -144,7 +143,7 @@ class appTodo(eventos.Eventos):
                 border_color="#34344e",)
         self.et_buscaTarefa.place(relx=0.665, rely=0.13)
 
-        self.imgBtnBusc = CTkImage(dark_image=Image.open('..\imagens\\search.png'), size=(20,22))
+        self.imgBtnBusc = CTkImage(dark_image=Image.open('.\imagens\\search.png'), size=(20,22))
         self.btnbuscTarefa = CTkButton(self.apptodo, 
                 text='', 
                 image=self.imgBtnBusc, 
@@ -213,14 +212,15 @@ class appTodo(eventos.Eventos):
                 orientation='vertical', 
                 command=self.listaTarefa.yview)
         self.scrollTarefa.place(relx=0.96, rely=0.41, relheight=0.56)
-        #self.listaTarefa.bind("<Double-1>", self.duplo_clique_tarefa)     
+        self.listaTarefa.configure(yscrollcommand=self.scrollTarefa.set)
+        self.listaTarefa.bind("<Double-1>", self.duplo_clique_tarefa)     
 
     def aparenciaCalendario(self):
         self.calendarioTarefa = Calendar(self.apptodo, 
                 fg_color='#34344e', 
                 font=('Ebrima', 12), 
                 locale='pt_br')
-        self.calendarioTarefa.place(relx=0.28, rely=0.2, width=250, height=200)
+        self.calendarioTarefa.config(relx=0.28, rely=0.2, width=250, height=200)
 
         self.confirmData = CTkButton(self.apptodo, 
                 text='Confirmar',
